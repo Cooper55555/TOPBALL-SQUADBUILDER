@@ -129,7 +129,6 @@ function renderPlayers(filterText = "", club = "") {
     const matchesSearch =
       p.name.toLowerCase().includes(q) ||
       p.pos.some(pos => pos.toLowerCase().includes(q));
-
     const matchesClub = club ? p.club === club : true;
     return matchesSearch && matchesClub;
   }).forEach(p => {
@@ -142,7 +141,8 @@ function renderPlayers(filterText = "", club = "") {
       <div class="grow">
         <div style="font-weight:800">${p.name}</div>
         <div class="muted small">${p.pos.join("/")}</div>
-      </div>`;
+      </div>
+    `;
     el.addEventListener("dragstart", e => {
       e.dataTransfer.setData("text/plain", p.id);
     });
@@ -228,7 +228,8 @@ function bindUI() {
   formationSelect.onchange = e => setFormation(e.target.value);
 
   // Search filter
-  const searchInput = document.getElementById("search");
+const searchInput = document.getElementById("search");
+searchInput.addEventListener("input", () => renderPlayers(searchInput.value));
   const clubFilter = document.getElementById("clubFilter");
 
   searchInput.addEventListener("input", () =>
